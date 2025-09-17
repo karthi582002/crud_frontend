@@ -15,6 +15,17 @@ export const getAllNurses = async (page = 1, limit = 5) => {
     }
 };
 
+// Fetch ALL records (for Excel export)
+export const fetchAllRecords = async () => {
+    try {
+        const response = await axios.get(`${API_URL}/export`);
+        return response.data.data; // return the array of nurses
+    } catch (error) {
+        console.error("Error fetching all records:", error);
+        return [];
+    }
+};
+
 // Delete a nurse
 export const deleteNurse = async (id) => {
     try {

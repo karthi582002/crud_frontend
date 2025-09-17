@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import StickyHeadTable from "./components/Table.jsx";
 import { saveAs } from "file-saver";
 import * as XLSX from "xlsx";
-import {addNurse, getAllNurses, updateNurse} from "./server.js";
+import {addNurse, fetchAllRecords, getAllNurses, updateNurse} from "./server.js";
 import NurseModal from "./components/NurseModal.jsx";
 
 const App = () => {
@@ -53,14 +53,33 @@ const App = () => {
     );
 
 
-    // Download table as Excel
-    const handleDownload = () => {
-        const worksheet = XLSX.utils.json_to_sheet(filteredNurses);
-        const workbook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(workbook, worksheet, "Nurses");
-        const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
-        const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
-        saveAs(blob, "nurses.xlsx");
+// Download ALL records as Excel with date in filename
+    // Download ALL records as Excel with proper date formatting
+    const handleDownload = async () => {
+        try {
+            const allNurses = await fetchAllRecords();
+            if (!allNurses || allNurses.length === 0) {
+                alert("No data found to export");
+                return;
+            }
+            const formattedNurses = allNurses.map((nurse) => ({
+                ...nurse,
+                dob: nurse.dob
+                    ? new Date(nurse.dob).toLocaleDateString("en-GB")
+                    : "",
+            }));
+            const worksheet = XLSX.utils.json_to_sheet(formattedNurses);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Nurses");
+            const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+            const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
+            // Add current date to filename
+            const today = new Date().toISOString().slice(0, 10);
+            saveAs(blob, `nurses_${today}.xlsx`);
+        } catch (error) {
+            console.error("Error downloading Excel:", error);
+            alert("Failed to download Excel file.");
+        }
     };
 
 
