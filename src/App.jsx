@@ -75,7 +75,7 @@ const App = () => {
 
             <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-lg p-6">
                 <div className="flex items-center justify-between align-items-center">
-                    <div className="flex gap-5 items-center mb-4 w-1/2">
+                    <div className="flex gap-5 items-center mb-4 md:w-1/2 w-full ">
                         {/* Search Box */}
                         <input
                             type="text"
@@ -88,7 +88,7 @@ const App = () => {
                         {/* Download Button */}
                         <button
                             onClick={() => setOpen(true)}
-                            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+                            className="bg-blue-600 text-white px-4 py-2 w-1/2 rounded-lg hover:bg-blue-700 transition"
                         >
                             Add New Nurse
                         </button>
