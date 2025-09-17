@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3000/nurses";
+const API_URL = "https://crud-backend-cyan.vercel.app/nurses";
 
 // Get all nurses
 export const getAllNurses = async (page = 1, limit = 5) => {
