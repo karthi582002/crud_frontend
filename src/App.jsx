@@ -14,7 +14,7 @@ const App = () => {
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
     const [total, setTotal] = useState(0);
-    const [editingNurse, setEditingNurse] = useState(null);
+    const [editingNurse, setEditingNurse] = useState("");
 
 
     // Fetch data from API on component mount
@@ -120,7 +120,8 @@ const App = () => {
                 setOpen={setOpen}
                 errors={errors}
                 setErrors={setErrors}
-                editingNurse={editingNurse || ""}
+                editingNurse={editingNurse}
+                setEditingNurse={setEditingNurse}
                 onSubmit={async (formData) => {
                     try {
                         if (editingNurse) {

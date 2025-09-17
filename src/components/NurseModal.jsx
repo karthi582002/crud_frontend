@@ -18,7 +18,7 @@ const style = {
     p: 4,
 };
 
-export default function NurseModal({ open, setOpen, onSubmit, editingNurse, errors,setErrors }) {
+export default function NurseModal({ open, setOpen, onSubmit, editingNurse, errors,setErrors,setEditingNurse }) {
     const [form, setForm] = useState({
         nurseName: "",
         licenseNumber: "",
@@ -92,7 +92,10 @@ export default function NurseModal({ open, setOpen, onSubmit, editingNurse, erro
     };
 
     return (
-        <Modal open={open} onClose={() => setOpen(false)}>
+        <Modal open={open} onClose={() => {
+            setOpen(false)
+            setEditingNurse(false)
+        }}>
             <Box sx={style}>
                 <Typography variant="h6" mb={2}>
                     {editingNurse ? "Edit Nurse" : "Add New Nurse"}
@@ -142,7 +145,10 @@ export default function NurseModal({ open, setOpen, onSubmit, editingNurse, erro
                     <Button variant="contained" color="primary" onClick={handleSubmit}>
                         {editingNurse ? "Update" : "Add"}
                     </Button>
-                    <Button variant="outlined" onClick={() => setOpen(false)}>
+                    <Button variant="outlined" onClick={() => {
+                        setOpen(false)
+                        setEditingNurse(null)
+                    }}>
                         Cancel
                     </Button>
                 </Box>
